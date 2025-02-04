@@ -1,0 +1,47 @@
+using System;
+using System.Data;
+
+class Program
+{
+    static void Main()
+    {
+        DataSet statusChangeDataSet = new DataSet("StatusChangeRecords");
+        
+        // Create DataTable
+        DataTable changeLogTable = new DataTable("StatusChanges");
+        
+        // Add columns
+        changeLogTable.Columns.Add("Date/Time", typeof(string));
+        changeLogTable.Columns.Add("User", typeof(string));
+        changeLogTable.Columns.Add("PreviousStatus", typeof(string));
+        changeLogTable.Columns.Add("NewStatus", typeof(string));
+        changeLogTable.Columns.Add("SubmissionReason", typeof(string));
+        changeLogTable.Columns.Add("Comments", typeof(string));
+        changeLogTable.Columns.Add("EscalationReason", typeof(string));
+
+        // Add sample data
+        changeLogTable.Rows.Add(new object[] {"2023-10-01 09:00", "JohnDoe", "Open", "In Progress", "Initial Review", "Assigned to support team", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-01 10:30", "JaneSmith", "In Progress", "Escalated", "Technical Complexity", "Requires senior engineer review", "Hardware failure detected"});
+        changeLogTable.Rows.Add(new object[] {"2023-10-01 11:15", "MikeJohnson", "Escalated", "Resolved", "Solution Implemented", "Replaced faulty component", "Resolution confirmed"});
+        changeLogTable.Rows.Add(new object[] {"2023-10-02 14:00", "SarahWilson", "Resolved", "Reopened", "Customer Follow-up", "Client reports recurring issue", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-02 15:30", "RobertBrown", "Reopened", "In Progress", "Reinvestigation", "Checking previous fix effectiveness", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-03 08:45", "EmilyDavis", "In Progress", "Pending Approval", "Solution Validation", "Awaiting client confirmation", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-03 10:00", "DavidLee", "Pending Approval", "Closed", "Client Accepted", "Final confirmation received", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-04 13:20", "LisaTaylor", "Closed", "Archived", "Standard Procedure", "30-day closure policy", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-05 09:30", "AdamWilson", "New", "Open", "Ticket Triage", "Initial assessment complete", ""});
+        changeLogTable.Rows.Add(new object[] {"2023-10-05 11:00", "OliviaMartinez", "Open", "On Hold", "Awaiting Info", "Client response required", "Pending client documentation"});
+
+        // Add table to DataSet
+        statusChangeDataSet.Tables.Add(changeLogTable);
+
+        // Example usage: Display dataset contents
+        foreach (DataTable table in statusChangeDataSet.Tables)
+        {
+            Console.WriteLine($"Table: {table.TableName}");
+            foreach (DataRow row in table.Rows)
+            {
+                Console.WriteLine($"\t{row["Date/Time"]} | {row["User"]} | {row["PreviousStatus"]} → {row["NewStatus"]}");
+            }
+        }
+    }
+}
